@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width"/>
+    <title>Personl Learning Log</title>
+    <style>
+        /* 基础重置与字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+        }
+        /* 添加到index.html的<head>中 */
+
+.time-axis {
+    position: relative;
+    margin-left: 20px;
+}
+
+.time-axis::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #007bff;
+}
+
+.log-item {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #007bff;
+}
+
+.log-item::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #007bff;
+}
+
+.log-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.log-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+
+        /* 标题样式 */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 2.2rem;
+        }
+
+        h2 {
+            color: #3498db;
+            margin: 25px 0 15px;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        /* 表单样式 */
+        .log-form {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* 日志条目样式 */
+        .log-entry {
+            background: white;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .log-entry:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .log-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .log-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .log-content {
+            color: #34495e;
+            line-height: 1.7;
+        }
+
+        /* 无日志时的提示 */
+        .no-logs {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 40px 0;
+            font-style: italic;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .log-form {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1><strong><strong>Hello,Verelle!</strong></strong></h1>
+<br/>
+<h2><a href="{{url_for("create")}}">写日志</a></h2>
+<br/>
+<div class="container">
+    <h2>所有日志</h2>
+
+
+    {% if posts %}
+
+    {% for post in posts %}
+
+
+
+    <div class="log-title">
+        <a href="{{url_for("view",id=post.id)}}">
+
+        {{ post.title }} </a>
+
+    </div>
+        <div class="log-date">
+        {{ post.created_at}}
+</div>
+
+
+    {% endfor %}
+
+
+
+    {% else %}
+    <p>还没有日志哦，去创建一个吧！</p>
+    {% endif %}
+
+
+
+
+
+</div>
+</body>
+</html>
